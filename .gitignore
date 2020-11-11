@@ -1,6 +1,7 @@
 # Secrets
 config.toml
 *.ics
+nohup.out
 
 
 # Byte-compiled / optimized / DLL files
