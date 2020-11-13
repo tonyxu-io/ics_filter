@@ -1,0 +1,25 @@
+{
+  "name": "ics_filter",
+  "version": "1.0.0",
+  "description": "Filter away all events from an iCal stream where the location is Zoom",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinten1333/ics_filter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/quinten1333/ics_filter/issues"
+  },
+  "homepage": "https://github.com/quinten1333/ics_filter#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ical.js": "^1.4.0",
+    "request": "^2.88.2"
+  }
+}

@@ -1,25 +1,44 @@
-# zoomout
-Filter away all events from an iCal stream where the location is Zoom
+# ics filter
+Filter away all events from an iCal stream which mach the specified filters
 
+## config
+The `config.json` file configures all available calanders and their filters.
+The filters make it possible to create a compicated if statement.
 
-# Example setup for Canvas
+The following json:
+```json
+{
+    "canvas": {
+        "url": "https://canvas.uva.nl/feeds/calendars/XXX.ics",
+        "filters": [
+            {
+                "location": "^Zoom Online Meeting$",
+                "name": "Laptopcollege"
+            },
+            {
+                "location": "^Zoom Online Meeting$",
+                "name": "Hoorcollege"
+            }
+        ]
+    }
+}
+```
 
-## Preparation `zoomout`
-1. Copy `config.toml.example` to `config.toml`
-2. Go to your Canvas calendar and click "Calendar feed"
-3. Copy the URL shown and paste it in the config file
+Will translate in the following ifstatement:
+```javascript
+if (/^Zoom Online Meeting$/.test(event.location) && /Laptopcollege/.test(event.name)) || (/^Zoom Online Meeting$/.test(event.location) && /Hoorcollege/.test(event.name)) {
+    // Filter the event.
+}
+```
 
-## Preparation webserver
-4. Make sure the `filtered.ics` file can be accessed on some URL
-5. Personally I just make a hard link to this file in `/var/www/<my site>/filtered.ics`, where I was already hosting my website
+## Running the server
+Run the server using `npm start`, this will start the server on the port specified in the enviroment variable PORT or 3000 if this variable is not precent.
 
-## Run
-6. Run `nohup alwaysrun-zoomout.sh &` on your server, this refreshes `filtered.ics` every minute
+## Running the server using docker
+First you need to build the docker image using `docker build . -t ics_filter:latest`
+Then you can run it using: `docker run -d -p 80:80 ics_filter:latest`
+If you wish to send it to an external server, withoud using a docker image repository, over SSH you can use this command to do so: `docker save <image name> | ssh -C <ssh connection param> docker load`
 
 ## Import new feed
-7. Using your favourite calendar software, import the new file from your own domain
-
-# Exercises left to the reader
-* Set up a webserver and your own domain
-* Make sure the script auto-restarts when your server reboots
-* Only refresh the `filtered.ics` file when needed
+Using your favourite calendar software, import the new file from the server by navigating to:
+`domain.name/<calanderName>.ics`

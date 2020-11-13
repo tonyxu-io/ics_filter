@@ -1,0 +1,18 @@
+{
+    "canvas": {
+        "url": "https://canvas.uva.nl/feeds/calendars/XXX.ics",
+        "filters": [
+            {
+                "location": "Zoom Online Meeting"
+            }
+        ]
+    },
+    "work": {
+        "url": "work ics url",
+        "filters": [
+            {
+                "location": "^\\[uni\\]"
+            }
+        ]
+    }
+}
