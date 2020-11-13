@@ -33,7 +33,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
-  res.send('Hello! <br>This is a private calender server. <br>See: https://github.com/quinten1333/zoomout')
+  res.send('Hello! <br>This is a private calender server. <br>See: https://github.com/quinten1333/ics_filter')
 });
 
 app.get('/reload', (req, res) => {
