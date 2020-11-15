@@ -20,7 +20,7 @@ const getPropertyValue = (event, name) => {
 
 const validateFilter = (event, filter) => {
     for (let filterField in filter) {
-        const regex = new RegExp(filter[filterField])
+        const regex = new RegExp(filter[filterField].replace('\\\\', '\\'))
         if (!regex.test(getPropertyValue(event, filterField))) {
             return false;
         }
