@@ -18,6 +18,12 @@ const getPropertyValue = (event, name) => {
     return null
 }
 
+/**
+ *
+ * @param {ICSEvent} event The event
+ * @param {Dict} filter The filter dictionary
+ * @returns true if the event matches the filter, false otherwise.
+ */
 const validateFilter = (event, filter) => {
     for (let filterField in filter) {
         const regex = new RegExp(filter[filterField].replace('\\\\', '\\'))
@@ -27,6 +33,22 @@ const validateFilter = (event, filter) => {
     }
 
     return true;
+}
+
+/**
+ *
+ * @param {ICSEvent} event The event
+ * @param {Array<Dict>} filters Array of filter dictionaries
+ * @returns true if the event matches one filter, false otherwise.
+ */
+const validateFilters = (event, filters) => {
+    for (let filter of filters) {
+        if (validateFilter(event, filter)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 const app = express()
@@ -73,13 +95,11 @@ app.get('/:calenderName.ics', async (req, res, handleErr) => {
     const newEvents = []
 
     for (let event of events) {
-        for (let filter of calenderConf.filters) {
-            if (validateFilter(event, filter)) {
-                continue
-            }
-
-            newEvents.push(event)
+        if (validateFilters(event, calenderConf.filters)) {
+            continue;
         }
+
+        newEvents.push(event)
     }
 
     ical[2] = newEvents
