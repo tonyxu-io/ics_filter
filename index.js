@@ -1,9 +1,8 @@
 import fs from 'fs'
 import util from 'util'
 import express from 'express'
-import request from 'request'
+import axios from 'axios'
 import ICAL from 'ical.js'
-const requestGet = util.promisify(request.get)
 const getConfig = () => JSON.parse(fs.readFileSync('config.json', { encoding: 'utf8' }));
 
 let CONFIG = getConfig();
@@ -79,17 +78,17 @@ app.get('/:calenderName.ics', async (req, res, handleErr) => {
 
     let ics;
     try {
-        ics = await requestGet(calenderConf.url);
+        ics = await axios.get(calenderConf.url);
     } catch (err) {
         handleErr(err);
         return;
     }
-    if (ics.statusCode !== 200) {
-        res.status(500).send('Could not get original ics data.');
+    if (ics.status !== 200) {
+        res.status(500).send(`Could not get original ics data. Got response code ${ics.status} and body: ${ics.data}`);
         return;
     }
 
-    const ical = ICAL.parse(ics.body);
+    const ical = ICAL.parse(ics.data);
     const events = ical[2]
 
     const newEvents = []

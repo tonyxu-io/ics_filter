@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/quinten1333/ics_filter#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "express": "^4.17.1",
-    "ical.js": "^1.4.0",
-    "request": "^2.88.2"
+    "ical.js": "^1.4.0"
   }
 }
