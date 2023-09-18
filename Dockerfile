@@ -1,5 +1,5 @@
 FROM node:current-alpine3.12
-LABEL org.opencontainers.image.source https://github.com/quinten1333/ics_filter
+LABEL org.opencontainers.image.source https://github.com/tonyxu-io/ics_filter
 
 WORKDIR /app
 
@@ -9,6 +9,6 @@ RUN npm install
 COPY . .
 
 ENV PORT 80
-EXPOSE 80
+EXPOSE 8081
 
 CMD ["npm", "start"]
