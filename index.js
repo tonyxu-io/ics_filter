@@ -1,11 +1,10 @@
-import fs from 'fs'
-import util from 'util'
 import express from 'express'
 import axios from 'axios'
 import ICAL from 'ical.js'
-const getConfig = () => JSON.parse(fs.readFileSync('config.json', { encoding: 'utf8' }));
 
-let CONFIG = getConfig();
+let configRemote = await axios.get("https://gist.githubusercontent.com/tonyxu-io/22169c099f7693d7ab66a5c6a282be5a/raw");
+
+let CONFIG = configRemote.data
 
 const getPropertyValue = (event, name) => {
     for (let property of event[1]) {
